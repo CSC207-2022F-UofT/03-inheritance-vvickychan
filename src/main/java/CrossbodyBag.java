@@ -5,7 +5,7 @@
  * You may find the readings in chapter 3. Relationships between Classes
  * helpful while working through this exercise.
  */
-abstract public class CrossbodyBag extends Bag {
+public class CrossbodyBag extends Bag {
     // do I need to create this private instance variable
     private int numberOfStraps;
     public CrossbodyBag (String bag_color, int bag_cap, int num_straps) {
@@ -21,7 +21,9 @@ abstract public class CrossbodyBag extends Bag {
     }
     @Override
     public String toString() {
-        return " Crossbody Bag with " + this.numberOfStraps + " straps ";}
+        return this.getColor() + " Crossbody Bag with " + this.numberOfStraps + " straps ("+ this.getNumberOfContents()
+                + " / " +
+        this.getCapacity() + ")";}
 
     @Override
     public void enhance() {

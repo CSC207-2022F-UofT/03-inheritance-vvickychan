@@ -28,10 +28,11 @@ public abstract class Bag {
      * be empty (e.g. numberOfContents is 0 and an empty String array for
      * its contents.)
      */
-    public Bag (String bag_color, int bag_cap) {
-        // can the parameter names be the same as the private variables
-        color = bag_color;
-        capacity = bag_cap;
+    public Bag (String color, int capacity) {
+        this.color = color;
+        this.capacity = capacity;
+        this.numberOfContents = 0;
+        this.contents = new String[]{};
     }
 
     /*
@@ -42,15 +43,15 @@ public abstract class Bag {
      *           - getCapacity
      */
     public String getColor() {
-        return color;
+        return this.color;
     }
 
     public int getNumberOfContents() {
-        return numberOfContents;
+        return this.numberOfContents;
     }
 
     public int getCapacity() {
-        return capacity;
+        return this.capacity;
     }
 
     /*
@@ -60,8 +61,6 @@ public abstract class Bag {
     public void setColor(String color) {
         this.color = color;
     }
-
-
 
 
     /*
@@ -75,14 +74,15 @@ public abstract class Bag {
      *       and false otherwise.
      */
     public boolean addItem(String item) {
-        if (numberOfContents < capacity) {
-            String contentsNew[] = new String[contents.length + 1];
+        if (this.numberOfContents < this.capacity) {
+            String contentsNew[] = new String[this.contents.length + 1];
             int i;
-            for (i=0; i < contents.length; i++) {
-                contentsNew[i] = contents[i];
+            for (i=0; i < this.contents.length; i++) {
+                contentsNew[i] = this.contents[i];
             }
             contentsNew[i] = item;
-            numberOfContents++;
+            this.numberOfContents++;
+            this.contents = contentsNew;
             return true;
         }
         else {
@@ -101,16 +101,23 @@ public abstract class Bag {
      * @return
      */
     public String popItem() {
-    if (numberOfContents == 0) {
+        // if the contents is 0 return null
+    if (this.numberOfContents == 0) {
         return null;
     }
     else {
-        String x = contents[contents.length - 1];
-        String contentsNew[] = new String[contents.length - 1];
-        int i;
-        for (i=0; i < contents.length - 1; i++)
-            contentsNew[i] = contents[i];
-        numberOfContents--;
+        // the last item of the array
+        int l = this.contents.length - 1;
+        String x = this.contents[l];
+        // new array with a length 1 less that the last
+        String [] copy = new String[l];
+        // keep adding old items into the new array
+        for (int i=0, n=0; i < l; i++) {
+            if (i != l) {
+                copy[n++] = this.contents[i];
+            }
+        }
+        this.numberOfContents--;
         return x;
     }
     }
@@ -123,7 +130,7 @@ public abstract class Bag {
      */
     public void increaseCapacity(int n) {
         // TODO: Implement this method.
-        capacity = capacity + n;
+        this.capacity = this.capacity + n;
 
     }
 
